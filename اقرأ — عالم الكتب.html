@@ -1,0 +1,1540 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>اقرأ — عالم الكتب</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Baloo+Bhaijaan+2:wght@500;700;800&display=swap">
+
+<style>
+/*
+  DESIGN TOKENS
+  Layout : full-bleed sections, masonry-feel card grid, sticky hero
+  Palette: deep ink navy + electric amber + coral rose + emerald
+  Type   : Baloo Bhaijaan 2 (display) + Tajawal (body)
+*/
+:root {
+  --ink:      #0d0820;
+  --ink2:     #1a1035;
+  --surface:  #ffffff;
+  --surf2:    #f5f0ff;
+  --border:   rgba(100,60,200,.12);
+
+  --amber:    #ffb020;
+  --amber-dk: #c97500;
+  --coral:    #ff5f7e;
+  --emerald:  #00c9a7;
+  --violet:   #8b5cf6;
+  --sky:      #38bdf8;
+  --lime:     #84cc16;
+
+  --txt:      #1a1035;
+  --txt2:     #5a4a7a;
+  --txt-inv:  #ffffff;
+
+  --r-sm: 14px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --r-xl: 40px;
+
+  --shadow-card: 0 4px 24px rgba(80,30,160,.10);
+  --shadow-hover: 0 12px 48px rgba(80,30,160,.22);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:     #06030f;
+    --ink2:    #0f0820;
+    --surface: #160e2e;
+    --surf2:   #1e1540;
+    --border:  rgba(139,92,246,.18);
+    --txt:     #ede8ff;
+    --txt2:    #9d8fbe;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink:     #06030f;
+  --ink2:    #0f0820;
+  --surface: #160e2e;
+  --surf2:   #1e1540;
+  --border:  rgba(139,92,246,.18);
+  --txt:     #ede8ff;
+  --txt2:    #9d8fbe;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', system-ui, sans-serif;
+  direction: rtl;
+  background: var(--ink);
+  color: var(--txt);
+  overflow-x: hidden;
+  padding-left:  max(0px, env(safe-area-inset-left,  0px));
+  padding-right: max(0px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+/* ── GLOBAL UTILS ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: max(20px, env(safe-area-inset-left, 0px));
+}
+img { max-width: 100%; }
+button { font-family: inherit; }
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 200;
+  background: rgba(13,8,32,.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(139,92,246,.2);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px max(20px, env(safe-area-inset-left, 0px));
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.brand-icon { font-size: 30px; filter: drop-shadow(0 0 10px var(--amber)); }
+.brand-name {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--amber);
+  line-height: 1;
+}
+.brand-tagline { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500; }
+
+.nav-search {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+.nav-search input {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.15);
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  padding: 9px 16px 9px 40px;
+  border-radius: 50px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.nav-search input::placeholder { color: rgba(255,255,255,.35); }
+.nav-search input:focus { border-color: var(--amber); background: rgba(255,255,255,.12); }
+.nav-search .ico { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  margin-right: auto;
+}
+.nav-tab {
+  background: none;
+  border: 1.5px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.7);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.nav-tab:hover, .nav-tab.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--ink);
+}
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1a0c40 0%, #0d0820 60%, #12082a 100%);
+  padding: 80px 0 60px;
+}
+
+/* animated gradient orbs */
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.hero::before {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(139,92,246,.35) 0%, transparent 70%);
+  top: -200px; right: -100px;
+  animation: orb1 8s ease-in-out infinite alternate;
+}
+.hero::after {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,176,32,.25) 0%, transparent 70%);
+  bottom: -100px; left: -100px;
+  animation: orb2 10s ease-in-out infinite alternate;
+}
+@keyframes orb1 { to { transform: translate(60px, 40px); } }
+@keyframes orb2 { to { transform: translate(-40px, -60px); } }
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+  padding-inline: max(20px, env(safe-area-inset-left, 0px));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-text {}
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,176,32,.15);
+  border: 1px solid rgba(255,176,32,.3);
+  color: var(--amber);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 22px;
+  letter-spacing: .4px;
+}
+.hero-pill span { animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .5; transform: scale(.8); }
+}
+
+.hero h1 {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+  text-wrap: balance;
+  margin-bottom: 18px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--amber) 0%, var(--coral) 50%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: clamp(15px, 2.5vw, 18px);
+  color: rgba(255,255,255,.65);
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: linear-gradient(135deg, var(--amber) 0%, #e08000 100%);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 800;
+  padding: 14px 30px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(255,176,32,.4);
+  transition: transform .2s, box-shadow .2s;
+  text-decoration: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 36px rgba(255,176,32,.55); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(255,255,255,.2);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  text-decoration: none;
+}
+.btn-ghost:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); }
+
+/* hero floating books */
+.hero-visual {
+  position: relative;
+  width: 260px;
+  height: 300px;
+  flex-shrink: 0;
+}
+.hero-book {
+  position: absolute;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+.hb1 { width: 120px; height: 156px; top: 0; right: 0; background: linear-gradient(135deg,#ff5f7e,#c0392b); animation: float1 6s ease-in-out infinite; }
+.hb2 { width: 110px; height: 144px; top: 60px; right: 130px; background: linear-gradient(135deg,#8b5cf6,#4c1d95); animation: float2 7s ease-in-out infinite; }
+.hb3 { width: 100px; height: 132px; top: 145px; right: 20px; background: linear-gradient(135deg,#00c9a7,#065f46); animation: float3 8s ease-in-out infinite; }
+.hb4 { width: 90px; height: 118px; top: 180px; right: 140px; background: linear-gradient(135deg,#ffb020,#92400e); animation: float1 9s ease-in-out infinite reverse; }
+@keyframes float1 { 0%,100%{transform:translateY(0)rotate(-4deg)} 50%{transform:translateY(-14px)rotate(2deg)} }
+@keyframes float2 { 0%,100%{transform:translateY(-8px)rotate(5deg)} 50%{transform:translateY(8px)rotate(-2deg)} }
+@keyframes float3 { 0%,100%{transform:translateY(4px)rotate(-2deg)} 50%{transform:translateY(-10px)rotate(5deg)} }
+
+/* stats strip */
+.stats-strip {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(255,255,255,.06);
+  margin-top: 48px;
+  padding-top: 32px;
+}
+.stats-row {
+  display: flex;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+}
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 0 12px;
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+.stat-item:last-child { border-left: none; }
+.stat-num {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--amber);
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label { font-size: 13px; color: rgba(255,255,255,.45); font-weight: 500; }
+
+/* ══════════════════════════════════
+   AGE BANDS — the key UX feature
+══════════════════════════════════ */
+.age-bands {
+  background: var(--ink2);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.age-bands::-webkit-scrollbar { display: none; }
+.age-bands-inner {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+}
+.age-band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px 14px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .22s;
+  white-space: nowrap;
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  color: rgba(255,255,255,.5);
+  font-family: 'Tajawal', sans-serif;
+}
+.age-band:hover { color: #fff; background: rgba(255,255,255,.04); }
+.age-band.active { color: #fff; border-bottom-color: var(--amber); }
+.age-band-emoji { font-size: 22px; line-height: 1; }
+.age-band-label { font-size: 13px; font-weight: 700; }
+.age-band-range { font-size: 11px; opacity: .6; }
+
+/* ══════════════════════════════════
+   CATEGORY PILLS
+══════════════════════════════════ */
+.cat-bar {
+  padding: 20px 0 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cat-bar::-webkit-scrollbar { display: none; }
+.cat-bar-inner {
+  display: flex;
+  gap: 8px;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+  min-width: max-content;
+}
+.cat-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  background: var(--surf2);
+  border: 1.5px solid var(--border);
+  color: var(--txt2);
+}
+.cat-pill:hover, .cat-pill.active {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(255,176,32,.08);
+  transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════ */
+.main-content {
+  background: var(--surface);
+  min-height: 60vh;
+  padding-block: 32px 64px;
+}
+
+/* section header */
+.section-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+}
+.section-title {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--txt);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-count {
+  background: var(--violet);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 50px;
+}
+
+/* ══════════════════════════════════
+   BOOK GRID + CARDS
+══════════════════════════════════ */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 24px;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+}
+
+.book-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  box-shadow: var(--shadow-card);
+}
+.book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(139,92,246,.35);
+}
+
+/* cover */
+.book-cover {
+  position: relative;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 16px;
+}
+.cover-emoji {
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.3));
+  animation: float-cover 5s ease-in-out infinite;
+}
+@keyframes float-cover {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.cover-title-text {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,.95);
+  text-align: center;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* badges on cover */
+.badge-stack {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
+}
+.badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: .3px;
+}
+.badge-age   { background: rgba(0,0,0,.5); color: #fff; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.2); }
+.badge-new   { background: var(--coral); color: #fff; }
+.badge-award { background: linear-gradient(135deg,var(--amber),#d97706); color: var(--ink); }
+
+/* progress bar on cover bottom */
+.cover-progress {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 5px;
+  background: rgba(0,0,0,.25);
+}
+.cover-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald), var(--amber));
+  border-radius: 0 50px 50px 0;
+  transition: width .6s cubic-bezier(.34,1.56,.64,1);
+}
+
+/* book info */
+.book-info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.book-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--txt);
+  line-height: 1.35;
+}
+.book-author {
+  font-size: 12px;
+  color: var(--txt2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+.book-publisher {
+  font-size: 11px;
+  color: var(--violet);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.book-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+}
+.book-pages { font-size: 12px; color: var(--txt2); }
+.book-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber-dk);
+}
+.read-cta {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  border: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--surf2);
+  color: var(--violet);
+  border: 1.5px solid var(--border);
+}
+.read-cta:hover {
+  background: var(--violet);
+  color: #fff;
+  border-color: var(--violet);
+}
+.read-cta.in-progress { background: rgba(0,201,167,.1); color: var(--emerald); border-color: rgba(0,201,167,.3); }
+.read-cta.done { background: rgba(0,201,167,.12); color: var(--emerald); border-color: rgba(0,201,167,.3); }
+
+/* empty state */
+.empty-state {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--txt2);
+}
+.empty-state .es-icon { font-size: 64px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; font-weight: 700; color: var(--txt); margin-bottom: 8px; }
+
+/* ══════════════════════════════════
+   READER MODAL
+══════════════════════════════════ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,3,15,.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px max(16px, env(safe-area-inset-left,0px));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.reader {
+  width: 100%;
+  max-width: 680px;
+  max-height: 92vh;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 40px 100px rgba(0,0,0,.7);
+  background: var(--surface);
+  transform: scale(.93) translateY(30px);
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.overlay.open .reader { transform: scale(1) translateY(0); }
+
+/* reader header */
+.rdr-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  flex-shrink: 0;
+  position: relative;
+  color: #fff;
+}
+.rdr-head-emoji { font-size: 38px; flex-shrink: 0; }
+.rdr-head-info { flex: 1; min-width: 0; }
+.rdr-title {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rdr-meta { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+.rdr-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.rdr-close:hover { background: rgba(255,255,255,.22); }
+
+/* progress bar in header */
+.rdr-prog-wrap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,.1);
+}
+.rdr-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald), var(--amber));
+  transition: width .4s;
+}
+
+/* reader page body */
+.rdr-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 52px;
+  gap: 20px;
+  scroll-behavior: smooth;
+}
+@media (max-width: 500px) { .rdr-body { padding: 28px 20px; } }
+
+.rdr-page-emoji {
+  font-size: 96px;
+  line-height: 1;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,.15));
+  animation: float-cover 5s ease-in-out infinite;
+}
+.rdr-page-text {
+  font-size: clamp(17px, 3vw, 22px);
+  font-weight: 500;
+  color: var(--txt);
+  line-height: 1.95;
+  max-width: 480px;
+}
+.rdr-page-text strong { color: var(--violet); font-weight: 800; }
+.rdr-page-text em { color: var(--coral); font-style: normal; font-weight: 700; }
+
+/* reader footer */
+.rdr-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.rdr-nav {
+  background: linear-gradient(135deg, var(--violet), #6d28d9);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 11px 24px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.rdr-nav:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(109,40,217,.45); }
+.rdr-nav:disabled { opacity: .3; cursor: default; transform: none; box-shadow: none; }
+.rdr-nav.done-btn { background: linear-gradient(135deg, var(--emerald), #047857); }
+
+.rdr-dots {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all .22s;
+  padding: 0;
+}
+.dot:hover { background: var(--violet); }
+.dot.active { background: var(--violet); width: 20px; border-radius: 4px; }
+
+/* ══════════════════════════════════
+   PROGRESS TRACKER
+══════════════════════════════════ */
+.progress-section {
+  background: var(--surf2);
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+}
+.prog-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  padding-inline: max(20px, env(safe-area-inset-left,0px));
+}
+.prog-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform .22s, box-shadow .22s;
+  box-shadow: var(--shadow-card);
+}
+.prog-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.prog-emoji { font-size: 48px; flex-shrink: 0; }
+.prog-info { flex: 1; min-width: 0; }
+.prog-name { font-size: 15px; font-weight: 700; color: var(--txt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prog-bar-bg { background: var(--border); border-radius: 50px; height: 7px; margin: 6px 0 4px; overflow: hidden; }
+.prog-bar-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--emerald), var(--violet)); transition: width .6s cubic-bezier(.34,1.56,.64,1); }
+.prog-pct { font-size: 12px; font-weight: 700; color: var(--txt2); font-variant-numeric: tabular-nums; }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,.35);
+  text-align: center;
+  padding: 40px 20px 60px;
+  font-size: 13px;
+  line-height: 2.2;
+}
+.foot-brand {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-size: 22px;
+  color: var(--amber);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 700px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .nav-tabs { display: none; }
+  .books-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .stats-row { flex-wrap: wrap; }
+  .stat-item { min-width: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
+</style>
+
+<!-- ══ FIXED CANVAS STARS ══ -->
+<canvas id="starfield" style="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5"></canvas>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#" onclick="return false">
+      <span class="brand-icon">📖</span>
+      <div>
+        <div class="brand-name">اقرأ</div>
+        <div class="brand-tagline">عالم الكتب للأطفال</div>
+      </div>
+    </a>
+    <div class="nav-search">
+      <span class="ico">🔍</span>
+      <input type="text" placeholder="ابحث عن كتاب أو مؤلف…" id="searchInput" oninput="applyFilters()">
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="setView('library',this)">المكتبة</button>
+      <button class="nav-tab" onclick="setView('progress',this)">تقدّمي</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ CONTEST BANNER ══ -->
+<section style="background:linear-gradient(135deg,#1a0a2e 0%,#3b0764 50%,#1a0a2e 100%);border-bottom:2px solid rgba(255,176,32,.3);padding:0">
+  <div style="max-width:900px;margin:0 auto;padding:32px max(20px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center;text-align:center">
+    <!-- icon -->
+    <div style="font-size:70px;filter:drop-shadow(0 0 20px rgba(255,176,32,.6));flex-shrink:0;animation:float1 5s ease-in-out infinite">📖</div>
+    <!-- text -->
+    <div style="flex:1;min-width:220px">
+      <div style="font-family:'Baloo Bhaijaan 2',cursive;font-size:clamp(26px,5vw,42px);font-weight:800;color:#fff;line-height:1.1;text-wrap:balance">
+        مسابقة <span style="background:linear-gradient(90deg,#ffb020,#ff5f7e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">أقرأ</span>
+      </div>
+      <div style="font-size:14px;color:rgba(255,255,255,.65);margin-top:6px;font-weight:500">رحلة من الحروف إلى عالم الإبداع · المدرسة الابتدائية الثانية بالقاعدة الجوية</div>
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center">
+        <a href="https://ireadaward.com/" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;padding:12px 26px;border-radius:50px;text-decoration:none;box-shadow:0 4px 20px rgba(231,76,60,.5);transition:transform .2s"
+          onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+          🌐 شاركي الآن في مسابقة أقرأ
+        </a>
+        <div style="background:rgba(255,255,255,.08);border:1.5px solid rgba(255,176,32,.4);border-radius:50px;padding:10px 22px;display:inline-flex;align-items:center;gap:10px">
+          <span style="font-size:12px;color:rgba(255,255,255,.5);font-weight:600">رمز المدرسة</span>
+          <span style="font-family:'Baloo Bhaijaan 2',cursive;font-size:22px;font-weight:800;color:#ffb020;letter-spacing:2px">7422231</span>
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <a href="https://ireadaward.com/" target="_blank" rel="noopener"
+          style="font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;display:inline-flex;align-items:center;gap:5px">
+          🔗 ireadaward.com
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-pill"><span>🟡</span> برنامج اقرأ المدرسي — الطائف</div>
+      <h1>اكتشف عالماً<br>من <em>الكتب الحقيقية</em></h1>
+      <p class="hero-desc">
+        قصص وكتب مشهورة لكل الأعمار من ٦ إلى ١٢ سنة — مع أسماء المؤلفين ودور النشر.
+        اقرأ، تعلّم، واحتفل بكل صفحة تُنجزها!
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('librarySection').scrollIntoView({behavior:'smooth'})">
+          🚀 ابدأي القراءة
+        </button>
+        <button class="btn-ghost" onclick="setView('progress', document.querySelector('.nav-tab:nth-child(2)'))">
+          📈 تقدّمي
+        </button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-book hb1">📚</div>
+      <div class="hero-book hb2">🦁</div>
+      <div class="hero-book hb3">🌙</div>
+      <div class="hero-book hb4">🚀</div>
+    </div>
+  </div>
+  <div class="stats-strip">
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num" id="totalBooks">12</span>
+        <div class="stat-label">كتاباً في المكتبة</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="doneCount">0</span>
+        <div class="stat-label">كتب أكملتُها</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="inProgCount">0</span>
+        <div class="stat-label">أقرأ الآن</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">٦ – ١٢</span>
+        <div class="stat-label">الفئة العمرية</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LIBRARY SECTION ══ -->
+<div id="librarySection">
+  <!-- age bands -->
+  <div class="age-bands" style="background:var(--ink2)">
+    <div class="age-bands-inner" id="ageBands">
+      <button class="age-band active" data-age="all" onclick="setAge('all',this)">
+        <span class="age-band-emoji">🌈</span>
+        <span class="age-band-label">الكل</span>
+        <span class="age-band-range">٦ – ١٢ سنة</span>
+      </button>
+      <button class="age-band" data-age="6-7" onclick="setAge('6-7',this)">
+        <span class="age-band-emoji">🌱</span>
+        <span class="age-band-label">الناشئون</span>
+        <span class="age-band-range">٦ – ٧ سنوات</span>
+      </button>
+      <button class="age-band" data-age="8-9" onclick="setAge('8-9',this)">
+        <span class="age-band-emoji">🌟</span>
+        <span class="age-band-label">المستكشفون</span>
+        <span class="age-band-range">٨ – ٩ سنوات</span>
+      </button>
+      <button class="age-band" data-age="10-12" onclick="setAge('10-12',this)">
+        <span class="age-band-emoji">🔭</span>
+        <span class="age-band-label">القرّاء المتقدّمون</span>
+        <span class="age-band-range">١٠ – ١٢ سنة</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- category pills -->
+  <div style="background:var(--surface)">
+    <div class="cat-bar">
+      <div class="cat-bar-inner" id="catBar">
+        <button class="cat-pill active" data-cat="all" onclick="setCat('all',this)">🌈 جميع التصنيفات</button>
+        <button class="cat-pill" data-cat="adventure" onclick="setCat('adventure',this)">🚀 مغامرات</button>
+        <button class="cat-pill" data-cat="tales" onclick="setCat('tales',this)">🧚 حكايات وأساطير</button>
+        <button class="cat-pill" data-cat="values" onclick="setCat('values',this)">💛 قيم وشخصية</button>
+        <button class="cat-pill" data-cat="science" onclick="setCat('science',this)">🔭 علوم واكتشاف</button>
+        <button class="cat-pill" data-cat="quran" onclick="setCat('quran',this)">🌙 قرآن وسيرة</button>
+        <button class="cat-pill" data-cat="animals" onclick="setCat('animals',this)">🦁 عالم الحيوان</button>
+      </div>
+    </div>
+
+    <!-- section header -->
+    <div class="section-hd" id="sectionHd">
+      <div class="section-title">
+        📚 مكتبة الكتب
+        <span class="section-count" id="bookCount">12</span>
+      </div>
+    </div>
+
+    <!-- books grid -->
+    <div class="books-grid" id="booksGrid"></div>
+  </div>
+</div>
+
+<!-- ══ PROGRESS SECTION ══ -->
+<div class="progress-section" id="progressSection" style="display:none">
+  <div class="container">
+    <div class="section-hd" style="padding-inline:0; margin-bottom:20px">
+      <div class="section-title">📈 تقدّمي في القراءة</div>
+    </div>
+    <div class="prog-cards" id="progCards"></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="foot-brand">📖 اقرأ</div>
+  <div>عالم الكتب للأطفال · برنامج اقرأ المدرسي</div>
+  <div>المدرسة الابتدائية الثانية بالقاعدة الجوية · الطائف · المملكة العربية السعودية</div>
+  <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,.45);display:flex;justify-content:space-between;max-width:500px;margin-inline:auto">
+    <span>رائدة النشاط: أفراح حسن الأسمري</span>
+    <span>المديرة: سميرة نشاء العصيمي</span>
+  </div>
+</footer>
+
+<!-- ══ READER MODAL ══ -->
+<div class="overlay" id="overlay" onclick="handleOverlayBg(event)">
+  <div class="reader" id="reader">
+    <div class="rdr-head" id="rdrHead">
+      <span class="rdr-head-emoji" id="rdrEmoji">📖</span>
+      <div class="rdr-head-info">
+        <div class="rdr-title" id="rdrTitle">—</div>
+        <div class="rdr-meta" id="rdrMeta">—</div>
+      </div>
+      <button class="rdr-close" onclick="closeReader()">✕</button>
+      <div class="rdr-prog-wrap"><div class="rdr-prog-fill" id="rdrProgFill"></div></div>
+    </div>
+    <div class="rdr-body" id="rdrBody">
+      <div class="rdr-page-emoji" id="rdrPgEmoji">📖</div>
+      <p class="rdr-page-text" id="rdrPgText"></p>
+    </div>
+    <div class="rdr-foot">
+      <button class="rdr-nav" id="rdrPrev" onclick="prevPage()">← السابق</button>
+      <div class="rdr-dots" id="rdrDots"></div>
+      <button class="rdr-nav" id="rdrNext" onclick="nextPage()">التالي →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═════════════════════════════
+   STARFIELD
+═════════════════════════════ */
+(function(){
+  const c=document.getElementById('starfield'),ctx=c.getContext('2d');
+  let S=[];
+  const resize=()=>{c.width=innerWidth;c.height=innerHeight;};
+  const init=()=>{S=[];const n=Math.min(200,Math.floor(innerWidth*innerHeight/5000));for(let i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,r:.3+Math.random()*1.2,a:Math.random(),sp:.002+Math.random()*.006,ph:Math.random()*Math.PI*2});};
+  let f=0;
+  const draw=()=>{ctx.clearRect(0,0,c.width,c.height);f++;for(const s of S){const a=s.a*(.4+.6*Math.sin(f*s.sp+s.ph));ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);};
+  resize();init();draw();
+  window.addEventListener('resize',()=>{resize();init();});
+})();
+
+/* ═════════════════════════════
+   DATA — real Arabic children's books
+═════════════════════════════ */
+const BOOKS = [
+  /* ── 6-7 سنوات ── */
+  {
+    id:1, title:'أنا أستطيع', emoji:'🌟',
+    author:'نادية شريدة', publisher:'العبيكان للنشر',
+    coverGrad:'linear-gradient(135deg,#f59e0b,#d97706)',
+    pages:5, rating:5, ageMin:6, ageMax:8, cat:'values', isNew:false,
+    story:[
+      {e:'🌟',t:'<strong>أنا أستطيع</strong> كتاب رائع يعلّم الأطفال الثقة بالنفس. البطلة الصغيرة <em>لمياء</em> تواجه تحديات في المدرسة وتكتشف قوّتها الداخلية.'},
+      {e:'🎨',t:'في اليوم الأول، أرادت لمياء أن ترسم لكنّها خافت. قال لها معلّمها: <strong>"الخطأ أول درجة في سلّم النجاح."</strong> فحملت الفرشاة وبدأت.'},
+      {e:'🏃',t:'ومثل ذلك في الرياضة والقراءة والحساب. كل مرة تقول <em>"أنا لا أستطيع"</em> تتذكّر معلّمها وتبدأ من جديد بابتسامة.'},
+      {e:'💪',t:'في نهاية العام، نالت لمياء جائزة <strong>"أكثر طالبة شجاعة"</strong> — ليس لأنها لم تخطئ، بل لأنها لم تتوقّف رغم الأخطاء.'},
+      {e:'🏆',t:'<strong>الدرس:</strong> الجملة السحرية ليست "أنا أستطيع دائماً" — بل "سأحاول وسأتعلّم." اقرئي الكتاب كاملاً وستكتشفين قوّتكِ الحقيقية! 💫'}
+    ]
+  },
+  {
+    id:2, title:'من يسكن في الشجرة؟', emoji:'🌳',
+    author:'هدى الجهوري', publisher:'دار المنى للنشر',
+    coverGrad:'linear-gradient(135deg,#16a34a,#052e16)',
+    pages:4, rating:4, ageMin:6, ageMax:8, cat:'animals', isNew:false,
+    story:[
+      {e:'🌳',t:'<strong>من يسكن في الشجرة؟</strong> قصة استكشافية جميلة. الطفل <em>ريّان</em> يرى شجرة ضخمة في الحديقة ويتساءل: من يعيش هناك؟'},
+      {e:'🐦',t:'صعد ريّان ببطء ووجد في الفروع <strong>عشّ العصافير</strong> فيه ثلاث بيضات ملوّنة. استمع لتغريدها وحفظ صوت كل عصفور.'},
+      {e:'🐿️',t:'وجد أيضاً <em>سنجاباً</em> يخبّئ الجوز لفصل الشتاء، و<strong>جُعلاً</strong> يبني بيته من قشور اللحاء. الشجرة مدينة صغيرة!'},
+      {e:'🌿',t:'أدرك ريّان أن <strong>كل كائن في الطبيعة له مكانه ودوره</strong>. وعاهد نفسه ألّا يكسر غصناً ولا يُزعج ساكناً في الشجرة.'},
+      ]
+  },
+  {
+    id:3, title:'سلسلة أصدقاء الغابة', emoji:'🦊',
+    author:'إيمان المالكي', publisher:'مكتبة الملك عبدالعزيز',
+    coverGrad:'linear-gradient(135deg,#f97316,#7c2d12)',
+    pages:5, rating:5, ageMin:6, ageMax:9, cat:'animals', isNew:false,
+    story:[
+      {e:'🦊',t:'<strong>سلسلة أصدقاء الغابة</strong> سلسلة مشهورة ومحبوبة. في هذه القصة، <em>الثعلب ذكي</em> والأرنب <em>سريع</em> يتنافسان على كل شيء.'},
+      {e:'🌧️',t:'جاء يوم عاصف وانزلقت <strong>أرنبة صغيرة</strong> في النهر. الثعلب يسبح بسرعة، الأرنب يركض على الضفة ويرمي فرعاً. من سيصل أولاً؟'},
+      {e:'🤝',t:'وصلا معاً! أنقذاها معاً. نظر أحدهما إلى الآخر وابتسما. <strong>التنافس في مكانه، والتعاون في مكانه.</strong>'},
+      {e:'🌈',t:'عادا إلى الغابة أصدقاء حقيقيين. وفهما أن <em>اختلاف القدرات</em> لا يعني التعادي — بل التكامل. كل واحد يُكمل الآخر.'},
+      {e:'🏆',t:'<strong>الدرس:</strong> الأصدقاء الحقيقيون لا يتنافسون عند الأزمات — يتعاونون. الغابة أجمل لمّا يتحوّل التنافس إلى تعاون! 🌿'}
+    ]
+  },
+
+  /* ── 8-9 سنوات ── */
+  {
+    id:4, title:'المغامرون الخمسة', emoji:'🔦',
+    author:'محمود سالم', publisher:'دار الكتاب العربي',
+    coverGrad:'linear-gradient(135deg,#dc2626,#7f1d1d)',
+    pages:6, rating:5, ageMin:8, ageMax:12, cat:'adventure', isNew:false,
+    story:[
+      {e:'🔦',t:'<strong>المغامرون الخمسة</strong> أشهر سلاسل الكتب في الوطن العربي للمؤلف <strong>محمود سالم</strong>. خمسة أصدقاء يحلّون ألغازاً لا تنتهي في كل رحلة.'},
+      {e:'🏚️',t:'في هذه القصة، اكتشفوا <em>قصراً مهجوراً</em> على حافة الصحراء. قيل إنه مسكون، لكنّ البطلة <strong>نورة</strong> قالت: "الشجعان يدخلون ويكتشفون."'},
+      {e:'🗝️',t:'داخل القصر وجدوا مفاتيح قديمة وخرائط بالأرقام العربية. حلّ <em>زياد</em> رموز الخريطة بمعرفته بالحساب ووصلوا للغرفة السرية.'},
+      {e:'📜',t:'الغرفة تحوي مخطوطات نادرة تعود لألف سنة! بلّغوا متحف المدينة. قال مدير المتحف: <strong>"أنتم اكتشفتم كنزاً وطنياً حقيقياً."</strong>'},
+      {e:'🌟',t:'فازوا بجائزة الثقافة الوطنية وأصبحت قصّتهم في الأخبار. والسرّ؟ <strong>القراءة والتعاون والشجاعة.</strong>'},
+      {e:'🏆',t:'<strong>المغامرون الخمسة</strong> يثبتون أن الأطفال قادرون على تغيير العالم. ابحثي عن كتبهم في المكتبة وانضمي لمغامراتهم! 📚'}
+    ]
+  },
+  {
+    id:5, title:'روبنسون كروزو (مختصر)', emoji:'🏝️',
+    author:'دانيال ديفو — ترجمة دار الفاروق', publisher:'دار الفاروق للنشر',
+    coverGrad:'linear-gradient(135deg,#0369a1,#082f49)',
+    pages:6, rating:5, ageMin:9, ageMax:12, cat:'adventure', isNew:false,
+    story:[
+      {e:'🏝️',t:'<strong>روبنسون كروزو</strong> من أشهر روايات العالم. نُشرت سنة ١٧١٩م للكاتب <strong>دانيال ديفو</strong>. قصة رجل نجا وحيداً على جزيرة مجهولة.'},
+      {e:'🌊',t:'غرقت السفينة في عاصفة هائلة. نجا روبنسون وحده ووصل إلى جزيرة خضراء. لم يكن معه شيء — لا طعام ولا أدوات ولا أصدقاء.'},
+      {e:'🔨',t:'لم يستسلم. بنى كوخاً، زرع قمحاً، ربّى ماعزاً، وصنع أدواته. <strong>ثمانية وعشرون سنة</strong> على الجزيرة دون أن يفقد الأمل!'},
+      {e:'👣',t:'ذات يوم وجد <em>أثراً لقدم</em> على الرمل. لم يكن وحيداً! ثم التقى بـ<strong>فرايدي</strong> وأنقذه، وأصبح له أول صديق.'},
+      {e:'⛵',t:'أخيراً مرّت سفينة وأنقذته. عاد إلى وطنه بعد ٢٨ سنة، وكان أقوى وأحكم من أي وقت مضى.'},
+      {e:'🏆',t:'<strong>الدرس:</strong> الإنسان الذي يقرأ ويفكّر ويصبر لا يُقهر. روبنسون كروزو أثبت أن العقل والإرادة أقوى من أي عاصفة! 🌊'}
+    ]
+  },
+  {
+    id:6, title:'كليلة ودمنة', emoji:'🐅',
+    author:'ابن المقفّع', publisher:'دار المعارف — القاهرة',
+    coverGrad:'linear-gradient(135deg,#b45309,#78350f)',
+    pages:5, rating:5, ageMin:9, ageMax:12, cat:'tales', isNew:false,
+    story:[
+      {e:'🐅',t:'<strong>كليلة ودمنة</strong> كنز الأدب العربي. ألّفه <strong>عبد الله بن المقفّع</strong> في القرن الثاني الهجري. حكايات الحيوانات تخفي حكمة البشر.'},
+      {e:'🦁',t:'حكاية الأسد والثور: كان الأسد ملكاً عادلاً والثور شنزبة وزيره الأمين. ابن آوى الماكر <em>دمنة</em> زرع بينهما الشك والكذب.'},
+      {e:'🦊',t:'قال دمنة للأسد: <strong>"الثور يتآمر ضدّك!"</strong> وقال للثور: "الأسد غضبان عليك!" — وكلاهما كذب حتى تفرّق الصديقان.'},
+      {e:'⚖️',t:'اكتشف الأسد الحقيقة متأخراً وندم. <strong>دمنة حوكم بعدالة</strong>. والدرس الخالد: لا تصدّق من يفرّق بينك وبين من تحبّه.'},
+      {e:'🏆',t:'<strong>كليلة ودمنة</strong> — ألف سنة والناس يقرأونها! لأن دروسها في الصداقة والوفاء والعدل لا تتقادم. اقرئيها وستفهمين الحياة أكثر! 📖'}
+    ]
+  },
+
+  /* ── 8-10 سنوات ── */
+  {
+    id:7, title:'قصص الأنبياء للأطفال', emoji:'🌙',
+    author:'د. راغب السرجاني', publisher:'مؤسسة اقرأ — القاهرة',
+    coverGrad:'linear-gradient(135deg,#059669,#064e3b)',
+    pages:6, rating:5, ageMin:7, ageMax:12, cat:'quran', isNew:false,
+    story:[
+      {e:'🌙',t:'<strong>قصص الأنبياء للأطفال</strong> من أجمل ما كتبه <strong>د. راغب السرجاني</strong>. موثّقة من القرآن والسنة، وتُقدَّم بأسلوب شائق يشدّ الأطفال.'},
+      {e:'👑',t:'قصة سيدنا <strong>يوسف عليه السلام</strong>: ألقاه إخوته في البئر وهو طفل، وبِيع عبداً في مصر. لم يفقد الأمل ولم يترك الله.'},
+      {e:'🌾',t:'فسّر أحلام الملك وأصبح <strong>عزيز مصر</strong>. وحين جاءه إخوته — الذين آذوه — عفا عنهم وقال: <em>"لا تثريب عليكم اليوم."</em>'},
+      {e:'⛵',t:'وقصة <strong>يونس عليه السلام</strong> في بطن الحوت. ظلام فوق ظلام، لكنّه سبّح بحمد الله ودعاه. فأنقذه الله وأخرجه إلى النور.'},
+      {e:'🌊',t:'و<strong>موسى عليه السلام</strong> فلق الله له البحر لما توكّل. <em>"كلّا إن معي ربّي سيهدين."</em> الإيمان يفتح كل طريق مسدود.'},
+      {e:'🏆',t:'قصص الأنبياء ليست تاريخاً فقط — هي دستور حياة. <strong>الصبر والإيمان والعفو</strong> مفاتيحهم. اجعليها مفاتيحكِ أنتِ! 💫'}
+    ]
+  },
+  {
+    id:8, title:'ألف ليلة وليلة (للأطفال)', emoji:'🏮',
+    author:'تراث عربي — تحقيق طه حسين', publisher:'دار الهلال — القاهرة',
+    coverGrad:'linear-gradient(135deg,#7c3aed,#3b0764)',
+    pages:6, rating:5, ageMin:9, ageMax:12, cat:'tales', isNew:false,
+    story:[
+      {e:'🏮',t:'<strong>ألف ليلة وليلة</strong> أعظم مجموعة قصص في التراث الإنساني. <strong>شهرزاد</strong> الذكية أنقذت نفسها ونساء مملكتها بسلاح واحد: الكلمة والقصة.'},
+      {e:'🧞',t:'<em>علاء الدين والمصباح السحري:</em> وجد علاء الدين مصباحاً في كهف ظلام. حكّه فخرج عفريت هائل: <strong>"ماذا تريد يا سيدي؟"</strong>'},
+      {e:'🏰',t:'طلب قصراً ومالاً وتزوّج ابنة الوزير. لكنّ ساحراً سرق المصباح وخطف القصر! <strong>الحياة لا تدوم بالحظ — تدوم بالعقل.</strong>'},
+      {e:'⛵',t:'<em>السندباد البحري</em> سافر سبع رحلات. في كل رحلة خطر ومغامرة وتعلّم. قال: <strong>"كل بحر عبرته علّمني ما لا تعلّمه المدارس."</strong>'},
+      {e:'🌹',t:'و<em>علي بابا</em> اكتشف الكنز بكلمة سحرية: <strong>افتح يا سمسم!</strong> لكنّ ذكاء جارته مرجانة أنقذه من اللصوص.'},
+      {e:'🏆',t:'<strong>ألف ليلة وليلة</strong> تعلّمنا أن الخيال بلا حدود، والذكاء أقوى من الجبروت. شهرزاد غيّرت مصير مملكة بالقصص — وأنتِ ماذا ستفعلين بكلماتكِ؟ ✨'}
+    ]
+  },
+
+  /* ── 10-12 سنوات ── */
+  {
+    id:9, title:'رحلة إلى مركز الأرض (مختصرة)', emoji:'🌋',
+    author:'جول فيرن — ترجمة عربية', publisher:'دار ابن حزم — بيروت',
+    coverGrad:'linear-gradient(135deg,#dc2626,#450a0a)',
+    pages:5, rating:5, ageMin:10, ageMax:12, cat:'science', isNew:false,
+    story:[
+      {e:'🌋',t:'<strong>رحلة إلى مركز الأرض</strong> رائعة الكاتب الفرنسي <strong>جول فيرن</strong> (١٨٦٤م). مغامرة علمية لا تُصدَّق كتبها قبل اكتشاف طبقات الأرض!'},
+      {e:'🔬',t:'الأستاذ <em>ليدنبروك</em> وابن أخيه <strong>أكسل</strong> ينزلان في فوهة بركان في آيسلندا. دليلهما: مخطوطة قديمة لعالِم من القرن السادس عشر.'},
+      {e:'🦕',t:'عمقاً عمقاً، يكتشفون بحاراً تحت الأرض وجزراً وحيوانات ظنّها العلماء منقرضة منذ ملايين السنين. العلم حقيقي والخيال يقوده!'},
+      {e:'💡',t:'أكسل كان يخاف أولاً، لكنّ الفضول أقوى من الخوف. قرأ وتعلّم وطرح أسئلة. <strong>السؤال هو بداية كل اكتشاف علمي.</strong>'},
+      {e:'🏆',t:'<strong>جول فيرن</strong> كتب أكثر من ٦٠ رواية علمية — وكثير مما تخيّله أصبح حقيقة! القراءة توسّع تفكيركِ أبعد مما تتخيّلين. 🌍'}
+    ]
+  },
+  {
+    id:10, title:'مختارات شعر الأطفال', emoji:'📜',
+    author:'أحمد شوقي وآخرون', publisher:'دار المعارف — مصر',
+    coverGrad:'linear-gradient(135deg,#0891b2,#083344)',
+    pages:5, rating:4, ageMin:8, ageMax:12, cat:'values', isNew:false,
+    story:[
+      {e:'📜',t:'<strong>أحمد شوقي</strong> أمير الشعراء العرب كتب للأطفال قصائد خالدة. في هذه المختارات: قصائد سهلة جميلة تعلّم وتُسعد في آنٍ واحد.'},
+      {e:'🐢',t:'<em>قصيدة السلحفاة والعقاب:</em> تسابق السلحفاة والعقاب. ضحك العقاب وطار بسرعة ونام. مشت السلحفاة ببطء وصبر حتى فازت. <strong>الثبات يغلب السرعة!</strong>'},
+      {e:'🌊',t:'<em>ابنة الشاطئ:</em> "قومي انظري البحرَ كيف جرى، والموجُ كيف يضحك إذا ابتدى!" — شوقي يعلّم الأطفال الإعجاب بجمال الطبيعة.'},
+      {e:'🌙',t:'<em>أمير الشعر</em> كتب أيضاً عن الوطن والأم والمدرسة. "وَطَني لو شُغِلتُ بالخُلدِ عنه، نازَعَتني إليهِ في الخُلدِ نَفسي."'},
+      {e:'🏆',t:'الشعر يُعلّمكِ اللغة العربية الجميلة ويفتح قلبكِ للجمال. احفظي بيتاً كل أسبوع وستكوني أميرة الكلمات! ✨'}
+    ]
+  },
+  {
+    id:11, title:'الأمير الصغير', emoji:'🌹',
+    author:'أنطوان دو سانت إكزوبيري — ترجمة', publisher:'دار الآداب — بيروت',
+    coverGrad:'linear-gradient(135deg,#7c3aed,#1e1b4b)',
+    pages:6, rating:5, ageMin:9, ageMax:12, cat:'tales', isNew:true,
+    story:[
+      {e:'🌹',t:'<strong>الأمير الصغير</strong> الأكثر مبيعاً في العالم (٢٠٠ مليون نسخة). كتبه <strong>أنطوان دو سانت إكزوبيري</strong> عام ١٩٤٣م. قصة للكبار أكثر من الأطفال.'},
+      {e:'✈️',t:'طيّار يهبط في الصحراء. يلتقي أميراً صغيراً قادماً من كوكب بعيد. الأمير يحبّ وردة وحيدة في كوكبه ويشتاق إليها.'},
+      {e:'🦊',t:'في رحلته عبر الكواكب، يلتقي <em>الثعلب</em> الذي يعلّمه سرّ الحياة: <strong>"الأشياء الجميلة لا تُرى بالعين، تُرى بالقلب فقط."</strong>'},
+      {e:'🌏',t:'يعرف الأمير الكبار الذين نسوا كيف يكونون أطفالاً. ينشغلون بالأرقام وينسون أن يُبهَروا بغروب الشمس أو وردة.'},
+      {e:'🌟',t:'"أنتِ مسؤولة للأبد عمّا روّضتِ" — أجمل جملة في الكتاب. الصداقة والمحبة تجعلانكِ مسؤولة.'},
+      {e:'🏆',t:'<strong>الأمير الصغير</strong> يُذكّرنا بما يهمّ في الحياة: المحبة، الصداقة، والجمال الخفي. اقرئيه الآن وستفهمينه كثيراً لمّا تكبرين. ✨'}
+    ]
+  },
+  {
+    id:12, title:'أولاد حارتنا', emoji:'🏘️',
+    author:'نجيب محفوظ (نسخة مُيسَّرة)', publisher:'مكتبة مصر — القاهرة',
+    coverGrad:'linear-gradient(135deg,#92400e,#1c0a00)',
+    pages:5, rating:4, ageMin:10, ageMax:12, cat:'values', isNew:false,
+    story:[
+      {e:'🏘️',t:'<strong>نجيب محفوظ</strong> الحائز على <em>جائزة نوبل في الآداب</em> كتب أعمالاً خالدة. هذا ملخّص مُبسَّط لأبرز أفكاره عن العدل والمجتمع.'},
+      {e:'🌆',t:'الحارة مصغّرة الحياة: فيها الغني والفقير، القوي والضعيف، الظالم والمظلوم. <strong>محفوظ يسألنا: كيف نبني مجتمعاً أفضل؟</strong>'},
+      {e:'💡',t:'يُقدّم شخصيات كثيرة تمثّل أفكاراً: من يُغيّر ظلم بقوّته؟ من يُغيّر بحكمته؟ من يستسلم؟ ومن يحاول ويفشل ثم يحاول ثانيةً؟'},
+      {e:'✍️',t:'كتب محفوظ أكثر من <strong>٥٠ رواية وقصة</strong>. بدأ يكتب وهو في المدرسة الابتدائية! <em>"الكتابة بدأت من القراءة."</em>'},
+      {e:'🏆',t:'نجيب محفوظ أثبت أن الكلمة العربية تستحق جائزة نوبل. وأنتِ لمّا تقرئين وتكتبين — تبنين جسراً للمستقبل! ✍️'}
+    ]
+  }
+];
+
+/* ═════════════════════════════
+   STATE
+═════════════════════════════ */
+let activeAge = 'all';
+let activeCat = 'all';
+let searchTerm = '';
+let viewMode = 'library';
+let readProgress = {};
+
+try { readProgress = JSON.parse(localStorage.getItem('iqra2_prog') || '{}'); } catch(e){}
+
+/* ═════════════════════════════
+   READER STATE
+═════════════════════════════ */
+let curBook = null, curPage = 0;
+
+/* ═════════════════════════════
+   FILTER HELPERS
+═════════════════════════════ */
+function ageMatches(b) {
+  if (activeAge === 'all') return true;
+  const [lo, hi] = activeAge.split('-').map(Number);
+  return b.ageMin <= hi && b.ageMax >= lo;
+}
+function catMatches(b) { return activeCat === 'all' || b.cat === activeCat; }
+function searchMatches(b) {
+  if (!searchTerm) return true;
+  const q = searchTerm;
+  return b.title.includes(q) || b.author.includes(q) || b.publisher.includes(q);
+}
+function getFiltered() { return BOOKS.filter(b => ageMatches(b) && catMatches(b) && searchMatches(b)); }
+
+/* ═════════════════════════════
+   SETTERS
+═════════════════════════════ */
+function setAge(v, el) {
+  activeAge = v;
+  document.querySelectorAll('.age-band').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+function setCat(v, el) {
+  activeCat = v;
+  document.querySelectorAll('.cat-pill').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+function setView(v, el) {
+  viewMode = v;
+  document.querySelectorAll('.nav-tab').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  if (v === 'library') {
+    document.getElementById('librarySection').style.display = '';
+    document.getElementById('progressSection').style.display = 'none';
+  } else {
+    document.getElementById('librarySection').style.display = 'none';
+    document.getElementById('progressSection').style.display = '';
+    renderProgress();
+  }
+}
+function applyFilters() {
+  searchTerm = document.getElementById('searchInput').value.trim();
+  renderBooks();
+}
+
+/* ═════════════════════════════
+   COVER GRADIENTS MAP
+═════════════════════════════ */
+const coverColors = {
+  adventure: 'linear-gradient(135deg,#dc2626,#7f1d1d)',
+  tales:     'linear-gradient(135deg,#7c3aed,#3b0764)',
+  values:    'linear-gradient(135deg,#f59e0b,#92400e)',
+  science:   'linear-gradient(135deg,#0369a1,#082f49)',
+  quran:     'linear-gradient(135deg,#059669,#064e3b)',
+  animals:   'linear-gradient(135deg,#f97316,#7c2d12)',
+};
+
+/* ═════════════════════════════
+   RENDER BOOKS
+═════════════════════════════ */
+function renderBooks() {
+  const grid = document.getElementById('booksGrid');
+  const filtered = getFiltered();
+  document.getElementById('bookCount').textContent = filtered.length;
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">🔍</div>
+        <h3>لا توجد نتائج</h3>
+        <p>جرّبي فئة عمرية أو تصنيفاً آخر</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(b => {
+    const prog = readProgress[b.id] || 0;
+    const pct = prog > 0 ? Math.round((prog / b.story.length) * 100) : 0;
+    const isDone = pct === 100;
+    const isInProg = pct > 0 && !isDone;
+    const grad = b.coverGrad || coverColors[b.cat] || 'linear-gradient(135deg,#4c1d95,#1e0a40)';
+    const stars = '★'.repeat(b.rating) + '☆'.repeat(5 - b.rating);
+    const ageLabel = `${b.ageMin}–${b.ageMax} سنة`;
+
+    return `
+<div class="book-card" onclick="openBook(${b.id})" tabindex="0" onkeydown="if(event.key==='Enter')openBook(${b.id})" role="button" aria-label="${b.title}">
+  <div class="book-cover">
+    <div class="cover-bg" style="background:${grad}">
+      <div class="cover-emoji">${b.emoji}</div>
+      <div class="cover-title-text">${b.title}</div>
+    </div>
+    <div class="badge-stack">
+      <span class="badge badge-age">${ageLabel}</span>
+      ${b.isNew ? '<span class="badge badge-new">جديد ✨</span>' : ''}
+    </div>
+    ${isDone ? `<div style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:60px">✅</div>` : ''}
+    <div class="cover-progress">
+      <div class="cover-progress-fill" style="width:${pct}%"></div>
+    </div>
+  </div>
+  <div class="book-info">
+    <div class="book-title">${b.title}</div>
+    <div class="book-author">✍️ ${b.author}</div>
+    <div class="book-publisher">🏛️ ${b.publisher}</div>
+    <div class="book-meta-row">
+      <span class="book-pages">📄 ${b.story.length} صفحات</span>
+      <span class="book-rating" title="${b.rating} من 5">${stars}</span>
+    </div>
+    <button class="read-cta ${isDone?'done':isInProg?'in-progress':''}">
+      ${isDone ? '🔄 إعادة القراءة' : isInProg ? `📖 استكمل — ${pct}%` : '📖 ابدأي القراءة'}
+    </button>
+  </div>
+</div>`;
+  }).join('');
+
+  updateStats();
+}
+
+/* ═════════════════════════════
+   UPDATE HERO STATS
+═════════════════════════════ */
+function updateStats() {
+  document.getElementById('totalBooks').textContent = BOOKS.length;
+  const done = BOOKS.filter(b => (readProgress[b.id]||0) >= b.story.length).length;
+  const inP  = BOOKS.filter(b => { const p=readProgress[b.id]||0; return p>0 && p<b.story.length; }).length;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('inProgCount').textContent = inP;
+}
+
+/* ═════════════════════════════
+   RENDER PROGRESS
+═════════════════════════════ */
+function renderProgress() {
+  const el = document.getElementById('progCards');
+  const started = BOOKS.filter(b => (readProgress[b.id]||0) > 0);
+  if (!started.length) {
+    el.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="es-icon">📚</div>
+      <h3>لم تبدأي بعد!</h3>
+      <p>اختاري كتاباً من المكتبة وابدأي مغامرتكِ.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = started.map(b => {
+    const prog = readProgress[b.id] || 0;
+    const pct = Math.min(100, Math.round((prog / b.story.length) * 100));
+    return `
+<div class="prog-card" onclick="openBook(${b.id})">
+  <span class="prog-emoji">${b.emoji}</span>
+  <div class="prog-info">
+    <div class="prog-name">${b.title}</div>
+    <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>
+    <div class="prog-pct">${pct===100?'✅ أكملتِ القراءة!':pct+'% · صفحة '+prog+' من '+b.story.length}</div>
+  </div>
+</div>`;
+  }).join('');
+}
+
+/* ═════════════════════════════
+   READER
+═════════════════════════════ */
+function openBook(id) {
+  curBook = BOOKS.find(b => b.id === id);
+  if (!curBook) return;
+  const saved = readProgress[id] || 0;
+  curPage = saved > 0 && saved < curBook.story.length ? saved : 0;
+  renderPage();
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeReader() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  saveProgress();
+  renderBooks();
+  if (viewMode === 'progress') renderProgress();
+}
+function handleOverlayBg(e) { if (e.target === document.getElementById('overlay')) closeReader(); }
+
+function renderPage() {
+  if (!curBook) return;
+  const pg = curBook.story[curPage];
+  const total = curBook.story.length;
+
+  // header
+  const grad = curBook.coverGrad || 'linear-gradient(135deg,#4c1d95,#0f0820)';
+  document.getElementById('rdrHead').style.background = grad;
+  document.getElementById('rdrEmoji').textContent = curBook.emoji;
+  document.getElementById('rdrTitle').textContent = curBook.title;
+  document.getElementById('rdrMeta').textContent = `✍️ ${curBook.author} · 🏛️ ${curBook.publisher} · الصفحة ${curPage+1} من ${total}`;
+
+  // progress
+  document.getElementById('rdrProgFill').style.width = `${((curPage+1)/total)*100}%`;
+
+  // body
+  document.getElementById('rdrPgEmoji').textContent = pg.e;
+  document.getElementById('rdrPgText').innerHTML = pg.t;
+  document.getElementById('rdrBody').scrollTop = 0;
+
+  // dots
+  document.getElementById('rdrDots').innerHTML = curBook.story.map((_,i) =>
+    `<button class="dot${i===curPage?' active':''}" onclick="goPage(${i})" aria-label="صفحة ${i+1}"></button>`
+  ).join('');
+
+  // buttons
+  document.getElementById('rdrPrev').disabled = curPage === 0;
+  const nextBtn = document.getElementById('rdrNext');
+  if (curPage === total - 1) {
+    nextBtn.textContent = '✅ انتهيتُ!';
+    nextBtn.className = 'rdr-nav done-btn';
+    nextBtn.onclick = () => { saveProgress(); closeReader(); };
+  } else {
+    nextBtn.textContent = 'التالي →';
+    nextBtn.className = 'rdr-nav';
+    nextBtn.onclick = nextPage;
+  }
+}
+
+function nextPage() { if (!curBook || curPage >= curBook.story.length-1) return; curPage++; renderPage(); saveProgress(); }
+function prevPage() { if (!curBook || curPage <= 0) return; curPage--; renderPage(); }
+function goPage(i) { curPage = i; renderPage(); saveProgress(); }
+
+function saveProgress() {
+  if (!curBook) return;
+  const maxPg = Math.max(readProgress[curBook.id]||0, curPage+1);
+  readProgress[curBook.id] = maxPg;
+  try { localStorage.setItem('iqra2_prog', JSON.stringify(readProgress)); } catch(e){}
+}
+
+/* keyboard */
+document.addEventListener('keydown', e => {
+  const open = document.getElementById('overlay').classList.contains('open');
+  if (e.key === 'Escape' && open) closeReader();
+  if (e.key === 'ArrowLeft' && open) nextPage();
+  if (e.key === 'ArrowRight' && open) prevPage();
+});
+
+/* ── INIT ── */
+renderBooks();
+</script>
+
+</body></html>
